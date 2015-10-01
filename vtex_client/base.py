@@ -48,7 +48,6 @@ class BaseClient:
         """
 
         url = self.api_url.format(self.api_store, url_sufix)
-
         response = getattr(requests, method)(url,
                                              data=json.dumps(data),
                                              headers=self._get_headers())
@@ -56,4 +55,4 @@ class BaseClient:
         if response.status_code != 200:
             return self._handle_error(response)
 
-        return response.json()
+        return response.json() if response.text else {}

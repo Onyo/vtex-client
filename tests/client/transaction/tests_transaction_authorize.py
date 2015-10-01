@@ -11,28 +11,32 @@ from vtex_client import TransactionClient
 from . import mockup
 
 
-class CreateTransactionTestCase(TestCase):
+class AuthorizeTransactionTestCase(TestCase):
 
     def setUp(self):
+        self.id = "BB55ED929FF749E6BE5A835E4C811B77"
         self.client = TransactionClient(api_store="teststore",
                                         api_key="testkey",
                                         api_token="testtoken")
-        self.url = "https://teststore.vtexpayments.com.br/api/pvt/transactions"
-        self.data = {"value": 100,
-                     "referenceId": "REF001",
-                     "channel": "mychannel",
-                     "urn": ""}
+        self.url = "https://teststore.vtexpayments.com.br/api/pvt/"\
+                   "transactions/{}/authorization-request".format(self.id)
+        self.data = {
+            "transactionId": self.id,
+            "softDescriptor": "sandboxintegracao",
+            "prepareForRecurrency": False,
+            "split": []
+        }
 
     @responses.activate
     def test_ok(self):
-        response_body, response_data = mockup.create_transaction_success()
+        response_body, response_data = mockup.get_authorize_success()
         responses.add(responses.POST,
                       self.url,
                       body=response_body,
                       status=200,
                       content_type='text/json')
 
-        result = self.client.create(self.data)
+        result = self.client.authorize(self.id, self.data)
         self.assertEqual(result, response_data)
 
     @responses.activate
@@ -45,43 +49,23 @@ class CreateTransactionTestCase(TestCase):
                       content_type='text/json')
 
         with self.assertRaises(faults.AuthorizationError) as context:
-            self.client.create(self.data)
+            self.client.authorize(self.id, self.data)
 
         self.assertEqual(context.exception.message, "Acesso não autorizado")
         self.assertEqual(context.exception.code, "1")
 
     @responses.activate
-    def test_invalid_data_without_value(self):
-        response_body = mockup.create_transaction_invalid_data_error()
+    def test_without_payment(self):
+        response_body = mockup.get_without_payment_error()
         responses.add(responses.POST,
                       self.url,
                       body=response_body,
                       status=400,
                       content_type='text/json')
 
-        del self.data['value']
-
         with self.assertRaises(faults.InvalidDataError) as context:
-            self.client.create(self.data)
+            self.client.authorize(self.id, self.data)
 
-        self.assertIn("make sure the transaction value is greater than zero",
-                      context.exception.message)
-        self.assertEqual(context.exception.code, "1402")
-
-    @responses.activate
-    def test_invalid_data_without_reference_id(self):
-        response_body = mockup.create_transaction_invalid_data_error()
-        responses.add(responses.POST,
-                      self.url,
-                      body=response_body,
-                      status=400,
-                      content_type='text/json')
-
-        del self.data['referenceId']
-
-        with self.assertRaises(faults.InvalidDataError) as context:
-            self.client.create(self.data)
-
-        self.assertIn("paramaters must be different from null or whitespace",
-                      context.exception.message)
-        self.assertEqual(context.exception.code, "1402")
+        self.assertEqual("The transaction does not have any payments.",
+                         context.exception.message)
+        self.assertEqual(context.exception.code, "1419")
