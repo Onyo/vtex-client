@@ -75,7 +75,7 @@ error_data = {
 }
 
 
-def get_success():
+def create_transaction_success():
     transaction_id = 'd9729feb74992cc3482b350163a1a010'
 
     data = dict(transaction_data)
@@ -109,10 +109,131 @@ def get_authorization_error():
     return json.dumps(data)
 
 
-def get_invalid_data_error():
+def create_transaction_invalid_data_error():
     data = dict(error_data)
     data['error']['code'] = "1402"
     data['error']['message'] = "The transaction creation request and its "\
         "paramaters must be different from null or whitespace. Also, make "\
         "sure the transaction value is greater than zero."
     return json.dumps(data)
+
+
+def get_without_payment_error():
+    data = dict(error_data)
+    data['error']['code'] = "1419"
+    data['error']['message'] = "The transaction does not have any payments."
+    return json.dumps(data)
+
+
+def get_authorize_success():
+    data = {
+        "token": "124053A3D81E4416A63CDD5882EF83D2",
+        "status": 8,
+        "statusDetail": "Approved",
+        "processingDate": "2015-09-01T19:07:09.2113805Z",
+        "refundedValue": 0,
+        "refundedToken": None,
+        "message": None,
+        "connectorRefundedValue": 0,
+        "cancelledValue": 0
+    }
+    return json.dumps(data), data
+
+
+def get_payment_success():
+    data = [
+        {
+            "id": "2C1927BEA6854",
+            "paymentSystem": 2,
+            "paymentSystemName": "Visa",
+            "group": "creditCard",
+            "isCustom": False,
+            "allowInstallments": True,
+            "allowIssuer": True,
+            "allowNotification": False,
+            "isAvailable": True,
+            "description": None,
+            "self": {
+                "href": "/api/pvt/transactions/2C1927BEA6854/payments/BAEE1047"
+            },
+            "tid": None,
+            "returnCode": "-1004",
+            "returnMessage": "Cardholder is empty",
+            "status": "Cancelled",
+            "connector": "Cielo",
+            "ConnectorResponses": {
+                "Tid": None,
+                "ReturnCode": "-1004",
+                "Message": "Cardholder is empty"
+            },
+            "connectorResponse": {
+                "Tid": None,
+                "ReturnCode": "-1004",
+                "Message": "Cardholder is empty"
+            },
+            "ShowConnectorResponses": True,
+            "value": 100,
+            "installmentsInterestRate": 0,
+            "installmentsValue": 100,
+            "referenceValue": 100,
+            "installments": 1,
+            "currencyCode": "BRL",
+            "provider": None,
+            "fields": [
+                {
+                    "name": "affiliationId",
+                    "value": "215b2709-"
+                },
+                {
+                    "name": "callbackUrl",
+                    "value": ""
+                },
+                {
+                    "name": "baseUrl",
+                    "value": "https://test.vtexpayments.com.br:443"
+                },
+                {
+                    "name": "currencyCode",
+                    "value": "BRL"
+                },
+                {
+                    "name": "cardHolder",
+                    "value": ""
+                },
+                {
+                    "name": "firstDigits",
+                    "value": "444433"
+                },
+                {
+                    "name": "lastDigits",
+                    "value": "1111"
+                },
+                {
+                    "name": "expiryMonth",
+                    "value": "10"
+                },
+                {
+                    "name": "expiryYear",
+                    "value": "2020"
+                },
+                {
+                    "name": "accountId",
+                    "value": "4324RG434356WWHG24"
+                },
+                {
+                    "name": "connector",
+                    "value": "Vtex.PaymentGateway.Connectors.CieloConnector"
+                },
+                {
+                    "name": "returnCode",
+                    "value": "-1004"
+                },
+                {
+                    "name": "returnMessage",
+                    "value": "Cardholder is empty"
+                }
+            ],
+            "sheets": None
+        }
+    ]
+    return json.dumps(data), data

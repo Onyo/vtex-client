@@ -5,7 +5,6 @@ The VTEX Client is a library to connect your Python apps to VTEX Payment Gateway
 ## Overview
 
 - VTEX uses JSON in requests and responses data
-- By default successful responses of POST requests are always empty
 - The library does not validate the request data before sending it to keep compatibility with future updates in the VTEX API
 
 All information about data specifications and flows can be found at the following links:
@@ -20,7 +19,8 @@ pip install git+https://github.com/Onyo/vtex-client.git
 ## Requirements
 Python (2.6 > or 3.x)
 
-## Using
+## Usage
+Exemple of creating transaction:
 ```python
 from vtex_client import TransactionClient
 
@@ -35,6 +35,8 @@ data = {"value": 100,
 # Result is a dictionary of all transaction data
 result = self.client.create(self.data)
 ```
+
+[See all usage documentation](USAGE.md)
 
 ## Running tests
 ```
