@@ -118,6 +118,15 @@ def create_transaction_invalid_data_error():
     return json.dumps(data)
 
 
+def send_payment_invalid_data_error(transaction):
+    data = dict(error_data)
+    data['error']['code'] = "1414"
+    data['error']['message'] = "Error when receiving payments for transaction"\
+                               " = {}. Please, "\
+                               "see the logs for details.".format(transaction)
+    return json.dumps(data), data
+
+
 def get_without_payment_error():
     data = dict(error_data)
     data['error']['code'] = "1419"
