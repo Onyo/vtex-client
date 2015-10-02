@@ -1,6 +1,14 @@
 # Usage
 
-## Create transaction
+- [Create transaction](#create)
+- [Authorize transaction](#authorize)
+- [Cancel transaction](#cancel)
+- [Get Payment info](#get-payment)
+- [Send Payment](#send-payment)
+
+
+
+## <a name="create"></a>Create transaction
 ```python
 from vtex_client import TransactionClient
 
@@ -15,7 +23,7 @@ data = {"value": 100,
 result = self.client.create(self.data)
 ```
 
-## Authorize transaction
+## <a name="authorize"></a>Authorize transaction
 ```python
 from vtex_client import TransactionClient
 
@@ -31,7 +39,18 @@ data = {'prepareForRecurrency': False,
 result = self.client.authorize(transaction, data)
 ```
 
-## Get Payment Information
+## <a name="cancel"></a>Cancel transaction
+```python
+from vtex_client import TransactionClient
+
+client = TransactionClient(api_store="$MY_STORE",
+                           api_key="$MY_KEY",
+                           api_token="$MY_TOKEN")
+transaction = "$TRANSACTION_ID"
+result = self.client.cancel(transaction, value=100)
+```
+
+## <a name="get-payment"></a>Get Payment Information
 ```python
 from vtex_client import TransactionClient
 
@@ -43,7 +62,7 @@ result = self.client.get_payment("$TRANSACTION_ID")
 ```
 
 
-## Send Payment Information
+## <a name="send-payment"></a>Send Payment Information
 ```python
 from vtex_client import TransactionClient
 
@@ -71,5 +90,5 @@ data = [
         }
     }
 ]
-result = self.client.send_payment(data)
+result = self.client.get_payment(data)
 ```

@@ -246,3 +246,27 @@ def get_payment_success():
         }
     ]
     return json.dumps(data), data
+
+
+def cancel_transaction_success():
+    data = {
+        'cancelledValue': 0,
+        'connectorRefundedValue': 0,
+        'message': None,
+        'processingDate': '2015-10-02T19:07:15.9803356Z',
+        'refundedToken': None,
+        'refundedValue': 0,
+        'status': 10,
+        'statusDetail': 'Cancelled',
+        'token': '1B6E27DCE2B9453C8',
+    }
+    return json.dumps(data), data
+
+
+def cancel_transaction_invalid_data_error():
+    data = dict(error_data)
+    data['error']['code'] = "1402"
+    data['error']['message'] = "The transaction value passed (0) is different"\
+        "from persisted transaction value (1.00). A possible cause is that "\
+        "the transaction for cancellation is another one (Id = ABC)."
+    return json.dumps(data)
