@@ -270,3 +270,27 @@ def cancel_transaction_invalid_data_error():
         "from persisted transaction value (1.00). A possible cause is that "\
         "the transaction for cancellation is another one (Id = ABC)."
     return json.dumps(data)
+
+
+def capture_transaction_success():
+    data = {
+        "token": "79F8FC5577DE4EA3B51D2D4D5D909ECB",
+        "status": 13,
+        "statusDetail": "Finished",
+        "processingDate": "2015-10-05T15:03:49.6346846Z",
+        "refundedValue": 0,
+        "refundedToken": None,
+        "message": None,
+        "connectorRefundedValue": 0,
+        "cancelledValue": 0
+    }
+    return json.dumps(data), data
+
+
+def capture_transaction_invalid_data_error():
+    data = dict(error_data)
+    data['error']['code'] = "1402"
+    data['error']['message'] = "Settlement requested value (0) should be less"\
+        " than or equal to remaining amount to pay (1.00), which must be "\
+        "different from 0."
+    return json.dumps(data)

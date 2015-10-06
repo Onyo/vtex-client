@@ -7,7 +7,8 @@ from .base import BaseClient
 ROUTES = {"create": "api/pvt/transactions",
           "authorize": "api/pvt/transactions/{}/authorization-request",
           "payment": "api/pvt/transactions/{}/payments",
-          "cancel": "api/pvt/transactions/{}/cancellation-request"}
+          "cancel": "api/pvt/transactions/{}/cancellation-request",
+          "capture": "api/pvt/transactions/{}/settlement-request"}
 
 
 class TransactionClient(BaseClient):
@@ -61,5 +62,17 @@ class TransactionClient(BaseClient):
         """
         data = {"value": value}
         return self._make_request(ROUTES["cancel"].format(transaction_id),
+                                  'post',
+                                  data)
+
+    def capture(self, transaction_id, value):
+        """Capture transaction in gateway.
+
+        :param transaction_id: id of transaction
+        :param value: amount to be captured
+        :returns: payment info
+        """
+        data = {"value": value}
+        return self._make_request(ROUTES["capture"].format(transaction_id),
                                   'post',
                                   data)
