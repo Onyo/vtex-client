@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
+import pkg_resources
 from .transaction import TransactionClient
 
 
 __version__ = "0.0.1"
+
+pkg_resources.declare_namespace(__name__)
