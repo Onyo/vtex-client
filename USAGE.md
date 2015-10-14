@@ -1,6 +1,7 @@
 # Usage
 
 - [Create transaction](#create)
+- [Get transaction](#get)
 - [Authorize transaction](#authorize)
 - [Capture transaction](#capture)
 - [Cancel transaction](#cancel)
@@ -23,6 +24,20 @@ data = {"value": 100,
 
 result = self.client.create(self.data)
 ```
+
+
+## <a name="get"></a>Get transaction
+```python
+from vtex_client import TransactionClient
+
+client = TransactionClient(api_store="$MY_STORE",
+                           api_key="$MY_KEY",
+                           api_token="$MY_TOKEN")
+
+transaction = "$TRANSACTION_ID"
+result = self.client.get(transaction)
+```
+
 
 ## <a name="authorize"></a>Authorize transaction
 ```python

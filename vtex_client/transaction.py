@@ -5,6 +5,7 @@ from .base import BaseClient
 
 
 ROUTES = {"create": "api/pvt/transactions",
+          "get": "api/pvt/transactions/{}",
           "authorize": "api/pvt/transactions/{}/authorization-request",
           "payment": "api/pvt/transactions/{}/payments",
           "cancel": "api/pvt/transactions/{}/cancellation-request",
@@ -12,6 +13,16 @@ ROUTES = {"create": "api/pvt/transactions",
 
 
 class TransactionClient(BaseClient):
+
+    def get(self, transaction_id):
+        """Get an transaction in gateway.
+
+        :param transaction_id: id of transaction
+        :returns: transaction info
+        """
+        return self._make_request(ROUTES["get"].format(transaction_id),
+                                  'get',
+                                  {})
 
     def create(self, data):
         """Create an transaction in gateway.
