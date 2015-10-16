@@ -38,7 +38,7 @@ class BaseClient:
         else:
             raise ValueError("{} is a invalid status code".format(status))
 
-    def _make_request(self, url_sufix, method, data):
+    def _make_request(self, url_sufix, method, data=None):
         """Send a request to gateway and handles error responses.
 
         :param url_sufix: Endpoint url
@@ -46,6 +46,8 @@ class BaseClient:
         :param data: Data to be sent to gateway
         :returns: Loaded JSON response of request
         """
+        if not data:
+            data = {}
 
         url = self.api_url.format(self.api_store, url_sufix)
         response = getattr(requests, method)(url,

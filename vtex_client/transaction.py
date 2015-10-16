@@ -21,8 +21,7 @@ class TransactionClient(BaseClient):
         :returns: transaction info
         """
         return self._make_request(ROUTES["get"].format(transaction_id),
-                                  'get',
-                                  {})
+                                  'get')
 
     def create(self, data):
         """Create an transaction in gateway.
@@ -50,8 +49,7 @@ class TransactionClient(BaseClient):
         :returns: payment info
         """
         return self._make_request(ROUTES["payment"].format(transaction_id),
-                                  'get',
-                                  {})
+                                  'get')
 
     def send_payment(self, transaction_id, data):
         """Send transaction payment to gateway.
