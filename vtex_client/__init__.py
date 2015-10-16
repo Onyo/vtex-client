@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import pkg_resources
-from .transaction import TransactionClient
 
 
 __version__ = "0.0.1"

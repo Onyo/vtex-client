@@ -6,7 +6,7 @@ import responses
 from unittest import TestCase
 
 from vtex_client import faults
-from vtex_client import TransactionClient
+from vtex_client.transaction import TransactionClient
 
 from . import mockup
 
