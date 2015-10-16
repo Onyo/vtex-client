@@ -22,7 +22,7 @@ Python (2.6 > or 3.x)
 ## Usage
 Exemple of creating transaction:
 ```python
-from vtex_client import TransactionClient
+from vtex_client.transaction import TransactionClient
 
 client = TransactionClient(api_store="$MY_STORE",
                            api_key="$MY_KEY",
