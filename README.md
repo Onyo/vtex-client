@@ -6,6 +6,9 @@ The VTEX Client is a library to connect your Python apps to VTEX Payment Gateway
 
 - VTEX uses JSON in requests and responses data
 - The library does not validate the request data before sending it to keep compatibility with future updates in the VTEX API
+- VTEX does not use the decimal separator character in currency fields. Basically the values are represented in cents. The values are represented like this:
+  - $ 1.00 = 100
+  - $ 37.80 = 3780
 
 All information about data specifications and flows can be found at the following links:
 - http://lab.vtex.com/
