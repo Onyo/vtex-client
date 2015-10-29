@@ -1,5 +1,8 @@
 # vtex-client
 
+[![Build Status](https://travis-ci.org/Onyo/vtex-client.svg?branch=master)](https://travis-ci.org/Onyo/vtex-client)
+
+
 The VTEX Client is a library to connect your Python apps to VTEX Payment Gateway (http://www.vtex.com/payment/).
 
 ## Overview
