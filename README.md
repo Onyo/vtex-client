@@ -16,7 +16,7 @@ All information about data specifications and flows can be found at the followin
 
 ## Installation
 ```
-pip install git+https://github.com/Onyo/vtex-client.git
+pip install vtex-client
 ```
 
 ## Requirements
