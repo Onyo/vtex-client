@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from .base import BaseClient
+from .base import BaseAuthenticatedClient
 
 
 ROUTES = {"create": "api/pvt/transactions",
@@ -12,7 +12,7 @@ ROUTES = {"create": "api/pvt/transactions",
           "capture": "api/pvt/transactions/{}/settlement-request"}
 
 
-class TransactionClient(BaseClient):
+class TransactionClient(BaseAuthenticatedClient):
 
     def get(self, transaction_id):
         """Get an transaction in gateway.
