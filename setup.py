@@ -17,7 +17,7 @@ if sys.argv[1] == 'develop':
 
 
 setup(
-    name="vtex_client",
+    name="vtex-client",
     version=vtex_client.__version__,
     author="Onyo Inc (onyo.com)",
     author_email="backend@onyo.com",
