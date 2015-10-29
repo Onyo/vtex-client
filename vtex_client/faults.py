@@ -29,3 +29,10 @@ class InvalidDataError(BaseClientError):
     """An BadRequest error in the API."""
 
     pass
+
+
+class GetewayError(BaseClientError):
+
+    """An internal gateway error in the API."""
+
+    pass

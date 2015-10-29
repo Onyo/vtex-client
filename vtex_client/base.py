@@ -21,13 +21,21 @@ class BaseClient(object):
     def _handle_error(self, response):
         status = response.status_code
         response_data = response.json()
-        error_message = response_data['error']['message']
-        error_code = response_data['error']['code']
+        if 'error' in response_data:
+            error_message = response_data['error']['message']
+            error_code = response_data['error']['code']
+        elif 'Message' in response_data:
+            error_message = response_data['Message']
+            error_code = None
+        else:
+            raise KeyError("Response does not contain the expected errorkeys")
 
         if status == 400:
             raise faults.InvalidDataError(error_message, error_code)
         elif status in (401, 403):
             raise faults.AuthorizationError(error_message, error_code)
+        elif status == 500:
+            raise faults.GetewayError(error_message, error_code)
         else:
             raise ValueError("{} is a invalid status code".format(status))
 
