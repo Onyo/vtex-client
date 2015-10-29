@@ -36,7 +36,7 @@ data = {"value": 100,
         "urn": ""}
 
 # Result is a dictionary of all transaction data
-result = self.client.create(self.data)
+result = client.create(data)
 ```
 
 [See all usage documentation](USAGE.md)

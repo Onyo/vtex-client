@@ -24,7 +24,7 @@ data = {"value": 100,
         "channel": "mychannel",
         "urn": ""}
 
-result = self.client.create(self.data)
+result = client.create(data)
 ```
 
 
@@ -37,7 +37,7 @@ client = TransactionClient(api_store="$MY_STORE",
                            api_token="$MY_TOKEN")
 
 transaction = "$TRANSACTION_ID"
-result = self.client.get(transaction)
+result = client.get(transaction)
 ```
 
 
@@ -54,7 +54,7 @@ data = {'prepareForRecurrency': False,
         'split': [],
         'transactionId': transaction}
 
-result = self.client.authorize(transaction, data)
+result = client.authorize(transaction, data)
 ```
 
 ## <a name="capture"></a>Capture transaction
@@ -65,7 +65,7 @@ client = TransactionClient(api_store="$MY_STORE",
                            api_key="$MY_KEY",
                            api_token="$MY_TOKEN")
 transaction = "$TRANSACTION_ID"
-result = self.client.capture(transaction, value=100)
+result = client.capture(transaction, value=100)
 ```
 
 ## <a name="cancel"></a>Cancel transaction
@@ -76,7 +76,7 @@ client = TransactionClient(api_store="$MY_STORE",
                            api_key="$MY_KEY",
                            api_token="$MY_TOKEN")
 transaction = "$TRANSACTION_ID"
-result = self.client.cancel(transaction, value=100)
+result = client.cancel(transaction, value=100)
 ```
 
 ## <a name="get-payment"></a>Get Payment Information
@@ -87,7 +87,7 @@ client = TransactionClient(api_store="$MY_STORE",
                            api_key="$MY_KEY",
                            api_token="$MY_TOKEN")
 
-result = self.client.get_payment("$TRANSACTION_ID")
+result = client.get_payment("$TRANSACTION_ID")
 ```
 
 
@@ -119,7 +119,7 @@ data = [
         }
     }
 ]
-result = self.client.get_payment(data)
+result = client.get_payment(data)
 ```
 
 
