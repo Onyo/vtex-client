@@ -1,5 +1,6 @@
 # vtex-client
 
+[![Current version at PyPI](https://img.shields.io/pypi/v/vtex-client.svg)](https://pypi.python.org/pypi/vtex-client)
 [![Build Status](https://travis-ci.org/Onyo/vtex-client.svg?branch=master)](https://travis-ci.org/Onyo/vtex-client)
 
 
