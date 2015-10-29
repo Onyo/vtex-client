@@ -51,3 +51,9 @@ of your report being lost.
 
 If you created a patch, please submit a [Pull
 Request](https://github.com/Onyo/vtex-client/pulls).
+
+
+## License
+
+This library is released under the [GNU General Public License version
+3](http://www.gnu.org/licenses/gpl-3.0.html).
