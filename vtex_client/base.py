@@ -13,10 +13,7 @@ class BaseClient(object):
 
     """Base client for VTEX webservice"""
 
-    api_url = "https://{}.vtexpayments.com.br/{}"
-
-    def __init__(self, api_store):
-        self.api_store = api_store
+    api_url = "https://api.vtexpayments.com.br/{}"
 
     def _get_headers(self):
         return {'CONTENT-TYPE': 'application/json'}
@@ -34,6 +31,9 @@ class BaseClient(object):
         else:
             raise ValueError("{} is a invalid status code".format(status))
 
+    def _make_url(self, url_sufix):
+        return self.api_url.format(url_sufix)
+
     def _make_request(self, url_sufix, method, data=None):
         """Send a request to gateway and handles error responses.
 
@@ -45,7 +45,7 @@ class BaseClient(object):
         if not data:
             data = {}
 
-        url = self.api_url.format(self.api_store, url_sufix)
+        url = self._make_url(url_sufix)
         response = getattr(requests, method)(url,
                                              data=json.dumps(data),
                                              headers=self._get_headers())
@@ -60,10 +60,15 @@ class BaseAuthenticatedClient(BaseClient):
 
     """Base authenticated client for VTEX webservice"""
 
+    api_url = "https://{}.vtexpayments.com.br/{}"
+
     def __init__(self, api_store, api_key, api_token):
-        super(BaseAuthenticatedClient, self).__init__(api_store)
+        self.api_store = api_store
         self.api_key = api_key
         self.api_token = api_token
+
+    def _make_url(self, url_sufix):
+        return self.api_url.format(self.api_store, url_sufix)
 
     def _get_headers(self):
         headers = super(BaseAuthenticatedClient, self)._get_headers()
