@@ -6,15 +6,7 @@ from setuptools import setup
 import vtex_client
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
-
-REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
-if sys.argv[1] == 'develop':
-    REQUIREMENTS += [i.strip()
-                     for i in open("requirements-development.txt").readlines()]
-
+REQUIREMENTS = ['requests']
 
 setup(
     name="vtex-client",
@@ -30,7 +22,6 @@ setup(
     package_dir={'vtex_client': 'vtex_client'},
     install_requires=REQUIREMENTS,
     download_url="https://github.com/Onyo/vtex-client/tarball/master",
-    long_description=read('README.md'),
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",
