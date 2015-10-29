@@ -9,21 +9,17 @@ import requests
 from . import faults
 
 
-class BaseClient:
+class BaseClient(object):
 
     """Base client for VTEX webservice"""
 
     api_url = "https://{}.vtexpayments.com.br/{}"
 
-    def __init__(self, api_store, api_key, api_token):
+    def __init__(self, api_store):
         self.api_store = api_store
-        self.api_key = api_key
-        self.api_token = api_token
 
     def _get_headers(self):
-        return {'CONTENT-TYPE': 'application/json',
-                'X-VTEX-API-APPKEY': self.api_key,
-                'X-VTEX-API-APPTOKEN': self.api_token}
+        return {'CONTENT-TYPE': 'application/json'}
 
     def _handle_error(self, response):
         status = response.status_code
@@ -58,3 +54,19 @@ class BaseClient:
             return self._handle_error(response)
 
         return response.json() if response.text else {}
+
+
+class BaseAuthenticatedClient(BaseClient):
+
+    """Base authenticated client for VTEX webservice"""
+
+    def __init__(self, api_store, api_key, api_token):
+        super(BaseAuthenticatedClient, self).__init__(api_store)
+        self.api_key = api_key
+        self.api_token = api_token
+
+    def _get_headers(self):
+        headers = super(BaseAuthenticatedClient, self)._get_headers()
+        headers.update({'X-VTEX-API-APPKEY': self.api_key,
+                        'X-VTEX-API-APPTOKEN': self.api_token})
+        return headers
