@@ -7,6 +7,8 @@
 - [Cancel transaction](#cancel)
 - [Get Payment info](#get-payment)
 - [Send Payment](#send-payment)
+- [Get public information about credit card](#card-getinformation)
+
 
 
 
@@ -118,4 +120,39 @@ data = [
     }
 ]
 result = self.client.get_payment(data)
+```
+
+
+## <a name="card-getinformation"></a>Get public information about credit card
+```python
+from vtex_client.card import CardClient
+
+client = CardClient()
+result = client.get_information("$FIRST_6_NUMBERS_OF_CARD")
+print result
+[
+    {
+        "id": "f0696ef3-1dea-5ae0-9db2-8e581fc229c6",
+        "code": 546785,
+        "cardBrand": "visa",
+        "cardCoBrand": None,
+        "cardType": None,
+        "country": {
+            "name": "Brazil",
+            "isoCode": "BR",
+            "isoCodeThreeDigits": "BRA"
+        },
+        "bank": {
+            "issuer": "BANCO DO BRASIL S.A.",
+            "website": None,
+            "phone": None,
+            "address": None
+        },
+        "cvvSize": 3,
+        "expirable": True,
+        "validationAlgorithm": "LUHN",
+        "additionalInfo": None,
+        "cardLevel": "CLASSIC"
+    }
+]
 ```
