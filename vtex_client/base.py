@@ -5,8 +5,14 @@ Module with common functions used in all Clients
 from __future__ import unicode_literals
 
 import json
+import logging
+import re
 import requests
+
 from . import faults
+
+
+logger = logging.getLogger('vtex-client')
 
 
 class BaseClient(object):
@@ -39,6 +45,40 @@ class BaseClient(object):
         else:
             raise ValueError("{} is a invalid status code".format(status))
 
+    def _get_cleaned_data(self, data):
+        """Remove sensitive data to be sent to logging"""
+        data = json.dumps(data)
+        data = re.sub('"validationCode":[ ]?((\"\d+\")?(\d+)?)',
+                      '"validationCode": "XXX"',
+                      data)
+        return data
+
+    def _log(self, url, method, data, response=None, exception=None):
+        lines = []
+        data = self._get_cleaned_data(data)
+        if response:
+            lines.append("HTTP/1.1 {} {}".format(response.status_code,
+                                                 response.reason))
+            lines.append("Location: {} {}".format(method, url))
+            for key, value in response.headers.items():
+                lines.append("{}: {}".format(key, value))
+            lines.append("Request Body:")
+            lines.append(data)
+            lines.append("Respose Body:")
+            lines.append(response.text)
+        else:
+            lines.append("{} {} HTTP/1.1".format(method, url))
+            lines.append("Location: {}".format("url"))
+            lines.append("Request Body:")
+            lines.append(data)
+
+        if exception:
+            lines.append("Exception: {} {}".format(exception.__class__,
+                                                   exception.message))
+
+        content = "\n".join(lines)
+        logger.debug(content)
+
     def _make_url(self, url_sufix):
         return self.api_url.format(url_sufix)
 
@@ -53,10 +93,24 @@ class BaseClient(object):
         if not data:
             data = {}
 
+        headers = self._get_headers()
         url = self._make_url(url_sufix)
-        response = getattr(requests, method)(url,
-                                             data=json.dumps(data),
-                                             headers=self._get_headers())
+        log_data = {"url": url,
+                    "method": method.upper(),
+                    "data": data}
+
+        self._log(**log_data)
+        try:
+            response = getattr(requests, method)(url,
+                                                 data=json.dumps(data),
+                                                 headers=headers)
+        except Exception as error:
+            log_data["exception"] = error
+            self._log(**log_data)
+            raise error
+
+        log_data["response"] = response
+        self._log(**log_data)
 
         if response.status_code != 200:
             return self._handle_error(response)
