@@ -56,7 +56,7 @@ class BaseClient(object):
     def _log(self, url, method, data, response=None, exception=None):
         lines = []
         data = self._get_cleaned_data(data)
-        if response:
+        if response is not None:
             lines.append("HTTP/1.1 {} {}".format(response.status_code,
                                                  response.reason))
             lines.append("Location: {} {}".format(method, url))
