@@ -4,12 +4,13 @@ from __future__ import unicode_literals
 from .base import BaseAuthenticatedClient
 
 
-ROUTES = {"create": "api/pvt/transactions",
-          "get": "api/pvt/transactions/{}",
+ROUTES = {"additional-data": "api/pvt/transactions/{}/additional-data",
           "authorize": "api/pvt/transactions/{}/authorization-request",
-          "payment": "api/pvt/transactions/{}/payments",
           "cancel": "api/pvt/transactions/{}/cancellation-request",
-          "capture": "api/pvt/transactions/{}/settlement-request"}
+          "capture": "api/pvt/transactions/{}/settlement-request",
+          "create": "api/pvt/transactions",
+          "get": "api/pvt/transactions/{}",
+          "payment": "api/pvt/transactions/{}/payments"}
 
 
 class TransactionClient(BaseAuthenticatedClient):
@@ -85,3 +86,13 @@ class TransactionClient(BaseAuthenticatedClient):
         return self._make_request(ROUTES["capture"].format(transaction_id),
                                   'post',
                                   data)
+
+    def send_additional_data(self, transaction_id, data):
+        """Send additional data to transaction.
+
+        :param transaction_id: id of transaction
+        :param values: additional data payload
+        :returns: additional data info
+        """
+        return self._make_request(
+            ROUTES["additional-data"].format(transaction_id), 'post', data)
